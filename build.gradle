@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'com.github.coryrobertson'
+version '1.0-SNAPSHOT'
+
+mainClassName = 'com.github.coryrobertson.ThreadedDataServer.ThreadedDataServer'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task DataServerClient(type: Jar)
+{
+    mainClassName = 'com.github.coryrobertson.ThreadedDataServer.ThreadedDataServerClient'
+    manifest
+            {
+                attributes 'Main-Class' : "com.github.coryrobertson.ThreadedDataServer.ThreadedDataServerClient"
+            }
+    from sourceSets.main.output
+    baseName = 'DataServerClient'
+}
+
+task DataServerServer(type: Jar)
+{
+    mainClassName = 'com.github.coryrobertson.ThreadedDataServer.ThreadedDataServer'
+    manifest
+            {
+                attributes 'Main-Class' : "com.github.coryrobertson.ThreadedDataServer.ThreadedDataServer"
+            }
+    from sourceSets.main.output
+    baseName = 'DataServerServer'
+}
+
+jar.dependsOn DataServerClient
+jar.dependsOn DataServerServer
