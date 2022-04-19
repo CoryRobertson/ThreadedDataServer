@@ -2,7 +2,6 @@ package com.github.coryrobertson.ThreadedDataServer;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -37,13 +36,13 @@ public class ClientHandler extends Thread
 
                 Messages.addMessage(msg);
 
+                objectOutputStream.writeObject(Messages.getMessages());
+
             }
             catch (IOException | ClassNotFoundException e)
             {
                 throw new RuntimeException(e);
             }
-
-
         }
         try {
             socket.close();

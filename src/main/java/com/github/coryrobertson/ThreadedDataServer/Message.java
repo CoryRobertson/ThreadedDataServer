@@ -1,6 +1,8 @@
 package com.github.coryrobertson.ThreadedDataServer;
 
-public record Message(int id, String message)
+import java.io.Serializable;
+
+public record Message(int id, String message) implements Serializable
 {
     public Message
     {
