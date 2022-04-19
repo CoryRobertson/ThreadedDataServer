@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class ThreadedDataServerClient
 {
 
-    private static ObjectInputStream objectInputStream = null;
+    public static ObjectInputStream objectInputStream = null;
 
     private static ObjectOutputStream objectOutputStream = null;
 
@@ -23,21 +23,18 @@ public class ThreadedDataServerClient
         Scanner in = new Scanner(System.in);
         String input = "";
         Thread clientMessageListThread = new Thread(new ClientMessageList());
-        //Thread clientMessageHandler;
-        //int lastKnownSize = -1;
 
         try
         {
             socket = new Socket("localhost", 5000);
             clientMessageListThread.start();
-            //clientMessageHandler = new Thread(new ClientMessageHandler(socket, objectOutputStream, objectInputStream));
-            //clientMessageHandler.start();
+
             while(!input.equals("exit"))
             {
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
+                //messages = (ArrayList<Message>) objectInputStream.readObject();
 
-                //System.out.println("hasnext: " + in.hasNext());
                 if(in.hasNextLine())
                 {
                     input = in.nextLine();
@@ -48,16 +45,17 @@ public class ThreadedDataServerClient
                 messages = (ArrayList<Message>) objectInputStream.readObject();
 
             }
+            System.out.println("disconnected...");
         }
         catch (UnknownHostException e)
         {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         catch (IOException e)
         {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

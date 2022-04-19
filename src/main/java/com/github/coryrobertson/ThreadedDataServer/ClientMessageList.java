@@ -4,11 +4,15 @@ public class ClientMessageList implements Runnable
 {
     int lastKnownSize = -1;
 
+    public ClientMessageList() {}
+
     @Override
     public void run()
     {
         while(true)
         {
+
+
             if (ThreadedDataServerClient.messages.size() > lastKnownSize)
             {
                 lastKnownSize = ThreadedDataServerClient.messages.size();

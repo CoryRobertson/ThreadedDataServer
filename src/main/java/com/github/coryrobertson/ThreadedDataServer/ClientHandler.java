@@ -11,8 +11,8 @@ public class ClientHandler extends Thread
 
     private int id;
 
-    private ObjectInputStream objectInputStream;
-    private ObjectOutputStream objectOutputStream;
+    private ObjectInputStream objectInputStream = null;
+    private ObjectOutputStream objectOutputStream = null;
 
     public ClientHandler(Socket socket, int id)
     {
@@ -31,10 +31,12 @@ public class ClientHandler extends Thread
             {
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                System.out.println("waiting on an object");
                 input = (String)objectInputStream.readObject();
                 Message msg = new Message(id,input);
 
                 Messages.addMessage(msg);
+                System.out.println("writing object to output stream");
 
                 objectOutputStream.writeObject(Messages.getMessages());
 
@@ -50,4 +52,5 @@ public class ClientHandler extends Thread
             throw new RuntimeException(e);
         }
     }
+
 }
