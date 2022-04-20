@@ -37,6 +37,7 @@ public class ClientHandler extends Thread
 
                 Messages.addMessage(msg);
                 System.out.println("writing object to output stream");
+                runCommand(input);
 
                 objectOutputStream.writeObject(Messages.getMessages());
 
@@ -50,6 +51,14 @@ public class ClientHandler extends Thread
             socket.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void runCommand(String input)
+    {
+        if(input.equals("test"))
+        {
+            System.out.println("test command run");
         }
     }
 
