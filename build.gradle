@@ -23,24 +23,38 @@ test {
     useJUnitPlatform()
 }
 
+tasks.withType(Tar){
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType(Zip){
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 task DataServerClient(type: Jar)
 {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     mainClassName = 'com.github.coryrobertson.ThreadedDataServer.Client.ThreadedDataServerClient'
     manifest
             {
                 attributes 'Main-Class' : "com.github.coryrobertson.ThreadedDataServer.Client.ThreadedDataServerClient"
             }
+
     from sourceSets.main.output
     baseName = 'DataServerClient'
 }
 
 task DataServerServer(type: Jar)
 {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     mainClassName = 'com.github.coryrobertson.ThreadedDataServer.Server.ThreadedDataServer'
     manifest
             {
                 attributes 'Main-Class' : "com.github.coryrobertson.ThreadedDataServer.Server.ThreadedDataServer"
             }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
     from sourceSets.main.output
     baseName = 'DataServerServer'
 }

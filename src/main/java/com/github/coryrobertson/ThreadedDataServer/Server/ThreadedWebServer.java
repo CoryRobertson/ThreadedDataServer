@@ -6,6 +6,7 @@ import org.takes.http.Exit;
 import org.takes.http.FtBasic;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ThreadedWebServer implements Runnable
 {
@@ -17,8 +18,20 @@ public class ThreadedWebServer implements Runnable
         while(true) //TODO: allow this thread to die somehow, have not decided how yet though...
         {
             //TODO: change web text in a thread on its own maybe? would allow things to feel more instant
-            ThreadedWebServer.webText = String.valueOf(System.currentTimeMillis());
+            //ThreadedWebServer.webText = String.valueOf(System.currentTimeMillis());
+            try {
+                new FtBasic(
+                        new TkFork(new FkRegex("/",new DataPage())), 8123 //port can basically be anything we need
+                ).start(Exit.NEVER);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
+    }
+
+    public static void setWebText(String input)
+    {
+        webText = input;
     }
 
     public static String getWebText()
@@ -26,18 +39,19 @@ public class ThreadedWebServer implements Runnable
         return webText;
     }
 
-    public static void main(String[] args)
-    {
-        Thread webTextThread = new Thread(new ThreadedWebServer());
-        webTextThread.start();
 
-
-        try {
-            new FtBasic(
-                    new TkFork(new FkRegex("/",new DataPage())), 8123 //port can basically be anything we need
-            ).start(Exit.NEVER);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public static void main(String[] args)
+//    {
+//        Thread webTextThread = new Thread(new ThreadedWebServer());
+//        webTextThread.start();
+//
+//
+//        try {
+//            new FtBasic(
+//                    new TkFork(new FkRegex("/",new DataPage())), 8123 //port can basically be anything we need
+//            ).start(Exit.NEVER);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }

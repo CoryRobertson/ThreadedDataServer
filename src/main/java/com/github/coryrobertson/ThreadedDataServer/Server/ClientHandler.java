@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientHandler extends Thread
 {
@@ -62,9 +63,17 @@ public class ClientHandler extends Thread
 
     private void runCommand(String input)
     {
+        ArrayList<Integer> valueList = new ArrayList<>();
         if(input.equals("test"))
         {
             System.out.println("test command run");
+        }
+
+        if(input.charAt(0) == 's')
+        {
+            System.out.println("set webtext to: " + input);
+
+            ThreadedWebServer.setWebText(input);
         }
         //TODO: make command that changes webtext in ThreadedWebServer, would allow for some cool stuff!
 

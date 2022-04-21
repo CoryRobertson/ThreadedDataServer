@@ -17,9 +17,14 @@ public class ThreadedDataServer
     public static void main(String[] args)
     {
 
-        System.out.println("Waiting on port 5000");
 
         int clientCount = 0;
+
+        System.out.println("Starting webserver on new thread...");
+
+        Thread webServer = new Thread(new ThreadedWebServer());
+        webServer.start();
+        System.out.println("Waiting on port 5000...");
 
         while(true)
         {
