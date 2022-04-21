@@ -1,4 +1,6 @@
-package com.github.coryrobertson.ThreadedDataServer;
+package com.github.coryrobertson.ThreadedDataServer.Server;
+
+import com.github.coryrobertson.ThreadedDataServer.Message;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -26,7 +28,7 @@ public class ThreadedDataServer
 
                 Socket clientSocket = serverSocket.accept();
                 if(clientCount >= maxClients && maxClients > 0)
-                {
+                {//this case occurs when too many clients are connecting
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
                     ArrayList<Message> msgs = new ArrayList<>();
                     msgs.add(new Message(0,"server full"));
@@ -35,7 +37,7 @@ public class ThreadedDataServer
                     System.out.println("kicking new client, max client size reached");
                 }
                 else
-                {
+                {//this case is when we allow a client to connect
                     clients.add(new ClientHandler(clientSocket, clientCount));
                     clients.get(clientCount).start();
                     clientCount++;

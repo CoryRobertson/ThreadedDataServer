@@ -1,4 +1,7 @@
-package com.github.coryrobertson.ThreadedDataServer;
+package com.github.coryrobertson.ThreadedDataServer.Server;
+
+import com.github.coryrobertson.ThreadedDataServer.Message;
+import com.github.coryrobertson.ThreadedDataServer.Messages;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -47,9 +50,12 @@ public class ClientHandler extends Thread
                 throw new RuntimeException(e);
             }
         }
-        try {
+        try
+        {
             socket.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             throw new RuntimeException(e);
         }
     }
@@ -60,6 +66,9 @@ public class ClientHandler extends Thread
         {
             System.out.println("test command run");
         }
+        //TODO: make command that changes webtext in ThreadedWebServer, would allow for some cool stuff!
+
+        //TODO: also check for exit commands to close more threads
     }
 
 }

@@ -13,8 +13,10 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.takes:takes:1.19'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
 }
 
 test {
@@ -23,10 +25,10 @@ test {
 
 task DataServerClient(type: Jar)
 {
-    mainClassName = 'com.github.coryrobertson.ThreadedDataServer.ThreadedDataServerClient'
+    mainClassName = 'com.github.coryrobertson.ThreadedDataServer.Client.ThreadedDataServerClient'
     manifest
             {
-                attributes 'Main-Class' : "com.github.coryrobertson.ThreadedDataServer.ThreadedDataServerClient"
+                attributes 'Main-Class' : "com.github.coryrobertson.ThreadedDataServer.Client.ThreadedDataServerClient"
             }
     from sourceSets.main.output
     baseName = 'DataServerClient'
@@ -34,10 +36,10 @@ task DataServerClient(type: Jar)
 
 task DataServerServer(type: Jar)
 {
-    mainClassName = 'com.github.coryrobertson.ThreadedDataServer.ThreadedDataServer'
+    mainClassName = 'com.github.coryrobertson.ThreadedDataServer.Server.ThreadedDataServer'
     manifest
             {
-                attributes 'Main-Class' : "com.github.coryrobertson.ThreadedDataServer.ThreadedDataServer"
+                attributes 'Main-Class' : "com.github.coryrobertson.ThreadedDataServer.Server.ThreadedDataServer"
             }
     from sourceSets.main.output
     baseName = 'DataServerServer'

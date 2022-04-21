@@ -1,15 +1,22 @@
-package com.github.coryrobertson.ThreadedDataServer;
+package com.github.coryrobertson.ThreadedDataServer.Client;
 
-public class ClientMessageList implements Runnable
+import com.github.coryrobertson.ThreadedDataServer.Client.ThreadedDataServerClient;
+import com.github.coryrobertson.ThreadedDataServer.Message;
+
+public class ClientMessageList extends Thread
 {
+    //we extend thread here instead of implementing runnable so we can reference the functions within this class from other scopes.
     int lastKnownSize = -1;
+
+    private boolean running;
 
     public ClientMessageList() {}
 
     @Override
     public void run()
     {
-        while(true)
+        running = true;
+        while(running)
         {
 
 
@@ -27,5 +34,10 @@ public class ClientMessageList implements Runnable
                 System.out.println("-----------==2==----------");
             }
         }
+    }
+
+    public void stopThread()
+    {
+        running = false;
     }
 }

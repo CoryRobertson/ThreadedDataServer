@@ -1,4 +1,6 @@
-package com.github.coryrobertson.ThreadedDataServer;
+package com.github.coryrobertson.ThreadedDataServer.Client;
+
+import com.github.coryrobertson.ThreadedDataServer.Message;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,7 +24,7 @@ public class ThreadedDataServerClient
         Socket socket;
         Scanner in = new Scanner(System.in);
         String input = "";
-        Thread clientMessageListThread = new Thread(new ClientMessageList());
+        ClientMessageList clientMessageListThread = new ClientMessageList();
 
         try
         {
@@ -46,15 +48,9 @@ public class ThreadedDataServerClient
 
             }
             System.out.println("disconnected...");
-        }
-        catch (UnknownHostException e)
+            clientMessageListThread.stopThread();
+        } catch (IOException | ClassNotFoundException e)
         {
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
