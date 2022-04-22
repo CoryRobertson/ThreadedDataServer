@@ -13,7 +13,7 @@ public class Messages
 
     public static void addMessage(Message message)
     {
-        System.out.println("message added to list with ID:" + message.id() + " and text: " + message.message());
+        System.out.println("message added to list with ID:" + message.clientid() + " and text: " + message.message());
 
         messages.add(message);
     }

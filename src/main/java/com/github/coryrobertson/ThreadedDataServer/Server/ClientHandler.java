@@ -3,9 +3,7 @@ package com.github.coryrobertson.ThreadedDataServer.Server;
 import com.github.coryrobertson.ThreadedDataServer.Message;
 import com.github.coryrobertson.ThreadedDataServer.Messages;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -82,8 +80,47 @@ public class ClientHandler extends Thread
             ThreadedWebServer.setWebText(inputText);
         }
 
+        String servoCommand = "servo";
+        if(input.substring(0,firstSpace).equals(servoCommand))
+        {
+            String inputCommand = input.substring(firstSpace + 1);
+            System.out.println("running servo command");
+
+            String output = runCommand("python", "src/main/PiClient/main.py", inputCommand);
+            System.out.println(output);
+
+        }
 
         //TODO: also check for exit commands to close more threads
+    }
+
+    private static String runCommand(String... args)
+    {
+        ProcessBuilder processBuilder = new ProcessBuilder().command(args);
+        StringBuilder sb = new StringBuilder();
+        String output = null;
+        int counter = 0;
+
+
+        try
+        {
+            Process process = processBuilder.start();
+            InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            while ((output = bufferedReader.readLine()) != null)
+            {
+                sb.append(output);
+
+                //process.wait();
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        return sb.toString();
+
     }
 
 }
