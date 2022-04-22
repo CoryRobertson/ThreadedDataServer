@@ -73,13 +73,15 @@ public class ClientHandler extends Thread
         }
 
         String setTextCommand = "settext";
+
         if(input.substring(0,firstSpace).equals(setTextCommand))
         {
-            System.out.println("set webtext to: " + input);
+            String inputText = input.substring(firstSpace+1);
+            System.out.println("set webtext to: " + inputText);
 
-            ThreadedWebServer.setWebText(input);
+            ThreadedWebServer.setWebText(inputText);
         }
-        //TODO: make command that changes webtext in ThreadedWebServer, would allow for some cool stuff!
+
 
         //TODO: also check for exit commands to close more threads
     }
