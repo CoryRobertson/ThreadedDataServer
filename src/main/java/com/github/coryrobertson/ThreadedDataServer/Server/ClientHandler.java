@@ -64,12 +64,16 @@ public class ClientHandler extends Thread
     private void runCommand(String input)
     {
         ArrayList<Integer> valueList = new ArrayList<>();
+        int firstSpace = input.indexOf(" ");
+
+
         if(input.equals("test"))
         {
             System.out.println("test command run");
         }
 
-        if(input.charAt(0) == 's')
+        String setTextCommand = "settext";
+        if(input.substring(0,firstSpace).equals(setTextCommand))
         {
             System.out.println("set webtext to: " + input);
 
