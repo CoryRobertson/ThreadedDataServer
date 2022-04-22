@@ -84,15 +84,18 @@ public class ClientHandler extends Thread
         if(input.substring(0,firstSpace).equals(servoCommand))
         {
             String inputCommand = input.substring(firstSpace + 1);
+
             ArrayList<String> inputCommands = new ArrayList<>();
             inputCommands.add("python");
-            inputCommands.add("src/main/PiClient/main.py");
+            inputCommands.add("./main.py");
 
             String[] arr = inputCommand.split(" ");
+
             for(int i = 0; i < arr.length; i++)
             {
                 inputCommands.add(arr[i]);
             }
+
             String[] command = inputCommands.toArray(new String[inputCommands.size()]);
 
             System.out.println("running servo command with args: " + command[2] + command[3]);

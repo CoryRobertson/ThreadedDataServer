@@ -23,6 +23,11 @@ test {
     useJUnitPlatform()
 }
 
+clean.doFirst
+        {
+            delete './main.py'
+        }
+
 tasks.withType(Tar){
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
@@ -75,6 +80,16 @@ task DataServerClientStartScript(type: CreateStartScripts)
     classpath = files('libs/' + DataServerClient.archiveFileName.get())
 }
 
+task copyPythonFile
+{
+    copy
+            {
+                from 'src/main/python/main.py'
+                into './'
+            }
+}
+
+jar.dependsOn copyPythonFile
 jar.dependsOn DataServerClient
 jar.dependsOn DataServerServer
 
@@ -89,6 +104,7 @@ distributions
                                     from (DataServerClient) {into 'lib'}
                                     from (DataServerClientStartScript) {into 'bin'}
                                     from (DataServerServerStartScript) {into 'bin'}
+                                    from ("src/main/python/main.py") {into 'bin'}
                                 }
                     }
         }
