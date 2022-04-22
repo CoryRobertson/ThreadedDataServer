@@ -1,5 +1,15 @@
-import urllib.request
 import sys
+
+servokit_running = False
+
+try:
+    from adafruit_servokit import ServoKit
+    kit = ServoKit(channels=16)
+    servokit_running = True
+
+except:
+    print("running without servokit")
+
 
 
 # args = sys.argv
@@ -7,9 +17,10 @@ import sys
 
 def main():
     args = sys.argv
-    input_from_server = args[1]
-    servo_number = input_from_server[0:1]
-    angle = input_from_server[2:]
+    print(args)
+    # input_from_server = args[1]
+    servo_number = args[1]
+    angle = args[2]
     # print(servo_number, input_from_server)
     change_servo_angle(servo_number, angle)
     # page = urllib.request.urlopen('http://localhost:8123')
