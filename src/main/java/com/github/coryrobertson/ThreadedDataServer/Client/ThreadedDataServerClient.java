@@ -6,11 +6,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ThreadedDataServerClient
+public class ThreadedDataServerClient extends Thread
 {
 
     public static ObjectInputStream objectInputStream = null;
@@ -18,6 +17,12 @@ public class ThreadedDataServerClient
     private static ObjectOutputStream objectOutputStream = null;
 
     public static ArrayList<Message> messages = new ArrayList<>();
+
+    @Override
+    public void run()
+    {
+        main(new String[0]);
+    }
 
     public static void main(String[] args)
     {

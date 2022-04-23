@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class ThreadedDataServer
+public class ThreadedDataServer implements Runnable
 {
 
     public static ArrayList<ClientHandler> clients = new ArrayList<>();
@@ -58,5 +58,11 @@ public class ThreadedDataServer
         }
 
 
+    }
+
+    @Override
+    public void run()
+    {
+        main(new String[0]);
     }
 }

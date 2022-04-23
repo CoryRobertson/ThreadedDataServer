@@ -63,16 +63,17 @@ public class ClientHandler extends Thread
     {
         ArrayList<Integer> valueList = new ArrayList<>();
         int firstSpace = input.indexOf(" ");
+        String compare = input.substring(0,firstSpace);
 
 
-        if(input.equals("test"))
+        if(compare.equals("test"))
         {
             System.out.println("test command run");
         }
 
         String setTextCommand = "settext";
 
-        if(input.substring(0,firstSpace).equals(setTextCommand))
+        if(compare.equals(setTextCommand))
         {
             String inputText = input.substring(firstSpace+1);
             System.out.println("set webtext to: " + inputText);
@@ -81,7 +82,7 @@ public class ClientHandler extends Thread
         }
 
         String servoCommand = "servo";
-        if(input.substring(0,firstSpace).equals(servoCommand))
+        if(compare.equals(servoCommand))
         {
             String inputCommand = input.substring(firstSpace + 1);
 
