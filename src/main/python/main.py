@@ -36,7 +36,7 @@ def change_servo_angle(servo_number, angle):
     print("servo angle: " + str(angle))
     if servo_kit_running:
         print("servo-kit running")
-        kit.servo[servo_number].angle = angle
+        kit.servo[int(servo_number)].angle = int(angle)
 
 
 def clamp_angle(angle):
