@@ -19,4 +19,22 @@ class CommandHandlerTest {
             Assertions.assertEquals(compare[i],arr[i]);
         }
     }
+
+    @Test
+    void changeServoAngles()
+    {
+        CommandHandler commandHandler = new CommandHandler();
+
+        commandHandler.changeServoAngles("1 2 3 4 5 6");
+        //String[] compare {}
+//        Assertions.assertEquals();
+    }
+
+    @Test
+    void changeServoAngle()
+    {
+        CommandHandler commandHandler = new CommandHandler();
+
+        commandHandler.changeServoAngle("0 90");
+    }
 }

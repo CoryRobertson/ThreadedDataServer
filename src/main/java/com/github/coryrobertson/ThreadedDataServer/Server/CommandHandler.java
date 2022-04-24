@@ -67,13 +67,27 @@ public class CommandHandler
 
     }
 
+    public void changeServoAngles(String inputCommand) throws IllegalArgumentException
+    {
+        String[] command = parseInput(inputCommand,"python","./servosCommand.py");
+        for(int i = 2; i < command.length; i++)
+        {
+            int in = Integer.parseInt(command[i]);
+            if (in < 0 || in > 180)
+            {
+                throw new IllegalArgumentException("Angle exceeds valid angle range of 0-180: " + in);
+            }
+            servoAngles[i-2] = in;
+        }
+        String output = runCommand(command);
+        System.out.println(output);
+    }
+
     private String runCommand(String... args)
     {
         ProcessBuilder processBuilder = new ProcessBuilder().command(args);
         StringBuilder sb = new StringBuilder();
         String output = null;
-        int counter = 0;
-
 
         try
         {

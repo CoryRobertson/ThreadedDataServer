@@ -96,6 +96,13 @@ public class ClientHandler extends Thread
 
         }
 
+        String servosCommand = "servos";
+        if (compare.equals(servosCommand))
+        {
+            ThreadedDataServer.commandHandler.changeServoAngles(inputCommand);
+
+        }
+
         //TODO: also check for exit commands to close more threads
     }
 
