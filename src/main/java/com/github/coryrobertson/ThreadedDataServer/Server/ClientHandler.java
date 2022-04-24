@@ -7,6 +7,9 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * An object that runs in a separate thread and handles a client with its own socket
+ */
 public class ClientHandler extends Thread
 {
     private Socket socket;
@@ -59,11 +62,16 @@ public class ClientHandler extends Thread
         }
     }
 
+    /**
+     * Runs a command from the client on the server, here is where we do the handling.
+     * @param input
+     */
     private void runCommand(String input)
     {
         ArrayList<Integer> valueList = new ArrayList<>();
         int firstSpace = input.indexOf(" ");
         String compare = input.substring(0,firstSpace);
+        String inputCommand = input.substring(firstSpace+1);
 
 
         if(compare.equals("test"))
@@ -84,58 +92,11 @@ public class ClientHandler extends Thread
         String servoCommand = "servo";
         if(compare.equals(servoCommand))
         {
-            String inputCommand = input.substring(firstSpace + 1);
-
-            ArrayList<String> inputCommands = new ArrayList<>();
-            inputCommands.add("python");
-            inputCommands.add("./main.py");
-
-            String[] arr = inputCommand.split(" ");
-
-            for(int i = 0; i < arr.length; i++)
-            {
-                inputCommands.add(arr[i]);
-            }
-
-            String[] command = inputCommands.toArray(new String[inputCommands.size()]);
-
-            System.out.println("running servo command with args: " + command[2] + command[3]);
-
-            String output = runCommand(command);
-            System.out.println(output);
+            ThreadedDataServer.commandHandler.changeServoAngle(inputCommand);
 
         }
 
         //TODO: also check for exit commands to close more threads
-    }
-
-    private static String runCommand(String... args)
-    {
-        ProcessBuilder processBuilder = new ProcessBuilder().command(args);
-        StringBuilder sb = new StringBuilder();
-        String output = null;
-        int counter = 0;
-
-
-        try
-        {
-            Process process = processBuilder.start();
-            InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            while ((output = bufferedReader.readLine()) != null)
-            {
-                sb.append(output);
-
-                //process.wait();
-            }
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-        return sb.toString();
-
     }
 
 }

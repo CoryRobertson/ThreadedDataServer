@@ -30,10 +30,12 @@ public class ThreadedDataServerClient extends Thread
         Scanner in = new Scanner(System.in);
         String input = "";
         ClientMessageList clientMessageListThread = new ClientMessageList();
+        String host;
 
         try
         {
-            socket = new Socket("localhost", 5000);
+            host = in.nextLine();
+            socket = new Socket(host, 5000);
             clientMessageListThread.start();
 
             while(!input.equals("exit"))

@@ -13,6 +13,8 @@ public class ThreadedDataServer implements Runnable
 
     public static ArrayList<ClientHandler> clients = new ArrayList<>();
 
+    public static CommandHandler commandHandler = new CommandHandler();
+
     private static final int maxClients = -1;
     public static void main(String[] args)
     {
