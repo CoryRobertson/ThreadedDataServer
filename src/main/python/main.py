@@ -52,6 +52,7 @@ def clamp_servo_selection(servo_number):
         return 16
     if int(servo_number) <= 0:
         return 0
+    return servo_number
 
 
 if __name__ == '__main__':
