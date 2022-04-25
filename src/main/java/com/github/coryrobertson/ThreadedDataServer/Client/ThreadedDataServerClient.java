@@ -34,6 +34,7 @@ public class ThreadedDataServerClient extends Thread
 
         try
         {
+            System.out.println("Enter host to connect to: ");
             host = in.nextLine();
             socket = new Socket(host, 5000);
             clientMessageListThread.start();
@@ -56,6 +57,7 @@ public class ThreadedDataServerClient extends Thread
             }
             System.out.println("disconnected...");
             clientMessageListThread.stopThread();
+            System.exit(0);
         } catch (IOException | ClassNotFoundException e)
         {
             e.printStackTrace();

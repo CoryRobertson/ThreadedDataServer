@@ -68,10 +68,25 @@ public class ClientHandler extends Thread
      */
     private void runCommand(String input)
     {
-        ArrayList<Integer> valueList = new ArrayList<>();
-        int firstSpace = input.indexOf(" ");
-        String compare = input.substring(0,firstSpace);
-        String inputCommand = input.substring(firstSpace+1);
+
+        //TODO: add exit command checking cause we die if we dont
+
+        if(input.contains("exit")) {return;}
+
+        //ArrayList<Integer> valueList = new ArrayList<>();
+        int firstSpace;
+        String compare;
+        String inputCommand;
+        try {
+            firstSpace = input.indexOf(" ");
+            compare = input.substring(0, firstSpace);
+            inputCommand = input.substring(firstSpace + 1);
+        } catch (StringIndexOutOfBoundsException e)
+        {
+            return;
+        }
+
+
 
 
         if(compare.equals("test"))
