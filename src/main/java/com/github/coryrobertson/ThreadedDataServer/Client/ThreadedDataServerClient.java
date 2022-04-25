@@ -31,6 +31,12 @@ public class ThreadedDataServerClient extends Thread
         String input = "";
         ClientMessageList clientMessageListThread = new ClientMessageList();
         String host;
+        MousePosition mousePosition = new MousePosition();
+        boolean mousePosSubmitter = false;
+
+        System.out.println("Mouse position submitter(y/n): ");
+        input = in.nextLine();
+        if(input.toLowerCase().equals("y")) {mousePosSubmitter = true;}
 
         try
         {
@@ -44,12 +50,28 @@ public class ThreadedDataServerClient extends Thread
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
                 //messages = (ArrayList<Message>) objectInputStream.readObject();
-
-                if(in.hasNextLine())
+                if(!mousePosSubmitter)
                 {
-                    input = in.nextLine();
+                    if (in.hasNextLine()) {
+                        input = in.nextLine();
 
-                    objectOutputStream.writeObject(input);
+                        objectOutputStream.writeObject(input);
+                    }
+                }
+                else
+                {
+                    int servoXDegrees = (int) mousePosition.map(mousePosition.getMapRangeX(),-1,1,0,180);
+                    int servoYDegrees = (int) mousePosition.map(mousePosition.getMapRangeY(),-1,1,0,180);
+                    String output = "servos " + servoXDegrees + " " + servoYDegrees;
+                    objectOutputStream.writeObject(output);
+                    try
+                    {
+                        Thread.sleep(1500);
+                    }
+                    catch (InterruptedException e)
+                    {
+                        throw new RuntimeException(e);
+                    }
                 }
 
                 messages = (ArrayList<Message>) objectInputStream.readObject();

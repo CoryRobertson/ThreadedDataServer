@@ -102,7 +102,7 @@ public class MousePosition implements Runnable
         return Math.toDegrees(Math.atan2(mousePos.getY() - (height / 2.0), mousePos.getX() - (width / 2.0)));
     }
 
-    private double map(double num, double in_min, double in_max, double out_min, double out_max)
+    public double map(double num, double in_min, double in_max, double out_min, double out_max)
     {
         return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
@@ -112,7 +112,7 @@ public class MousePosition implements Runnable
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.width;
 
-        return map(mouseX, 0,width,-1,1);
+        return map(getMouseX(), 0,width,-1,1);
     }
 
     public double getMapRangeY()
@@ -120,7 +120,7 @@ public class MousePosition implements Runnable
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double height = screenSize.height;
 
-        return map(mouseY,0,height,-1,1);
+        return map(getMouseY(),0,height,-1,1);
     }
 }
 

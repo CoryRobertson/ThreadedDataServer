@@ -1,7 +1,6 @@
 import sys
 
 servo_kit_running = False
-servo_kit_running = True
 
 try:
     from adafruit_servokit import ServoKit
