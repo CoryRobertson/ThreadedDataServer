@@ -26,6 +26,7 @@ test {
 clean.doFirst
         {
             delete './main.py'
+            delete './servosCommand.py'
         }
 
 tasks.withType(Tar){
