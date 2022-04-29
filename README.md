@@ -27,3 +27,4 @@ Later down the line I would love to have some sort of ASM solution to have the p
 #### Credits
 
 Solidworks design: elkayamben@gmail.com
+Electrical design: elkayamtom@gmail.com
