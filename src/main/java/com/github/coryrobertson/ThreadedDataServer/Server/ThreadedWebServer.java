@@ -8,6 +8,9 @@ import org.takes.http.FtBasic;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Mostly unused class, might use eventually but not at the moment
+ */
 public class ThreadedWebServer implements Runnable
 {
     private static String webText = "";
@@ -39,19 +42,4 @@ public class ThreadedWebServer implements Runnable
         return webText;
     }
 
-
-//    public static void main(String[] args)
-//    {
-//        Thread webTextThread = new Thread(new ThreadedWebServer());
-//        webTextThread.start();
-//
-//
-//        try {
-//            new FtBasic(
-//                    new TkFork(new FkRegex("/",new DataPage())), 8123 //port can basically be anything we need
-//            ).start(Exit.NEVER);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 }

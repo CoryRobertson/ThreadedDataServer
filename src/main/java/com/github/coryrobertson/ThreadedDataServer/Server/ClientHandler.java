@@ -96,6 +96,7 @@ public class ClientHandler extends Thread
 
         String setTextCommand = "settext";
 
+        //This is mostly unused, but i will leave it just incase
         if(compare.equals(setTextCommand))
         {
             String inputText = input.substring(firstSpace+1);

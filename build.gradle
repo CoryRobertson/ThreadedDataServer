@@ -27,6 +27,8 @@ clean.doFirst
         {
             delete './main.py'
             delete './servosCommand.py'
+            delete './servoPageReader.py'
+            delete './streamPiCamera.py'
         }
 
 tasks.withType(Tar){
@@ -36,6 +38,10 @@ tasks.withType(Tar){
 tasks.withType(Zip){
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+/*
+These jars are not going to be used any more, but are still going to be kept as comments just incase :)
+ */
 
 task DataServerClient(type: Jar)
 {
@@ -65,12 +71,40 @@ task DataServerServer(type: Jar)
     baseName = 'DataServerServer'
 }
 
+task DataReverseServerHost(type: Jar)
+{
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    mainClassName = 'com.github.coryrobertson.ThreadedDataServer.ReverseServer.WebHost'
+    manifest
+            {
+                attributes 'Main-Class' : "com.github.coryrobertson.ThreadedDataServer.ReverseServer.WebHost"
+            }
+
+    from sourceSets.main.output
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+    baseName = 'DataReverseServerHost'
+}
+
+task DataReverseServerHostStartScript(type: CreateStartScripts)
+{
+    outputDir = file('build/scripts/')
+    mainClass = 'com.github.coryrobertson.ThreadedDataServer.ReverseServer.WebHost'
+    applicationName = 'StartReverseServerHost'
+    classpath = files('libs/' + jar.getArchiveFileName().get())
+//    classpath = files('libs/' + DataReverseServerHost.archiveFileName.get())
+}
+
 task DataServerServerStartScript(type: CreateStartScripts)
 {
     outputDir = file('build/scripts/')
     mainClass = 'com.github.coryrobertson.ThreadedDataServer.Server.ThreadedDataServer'
     applicationName = 'StartThreadedDataServerServer'
-    classpath = files('libs/' + DataServerServer.archiveFileName.get())
+    classpath = files('libs/' + jar.getArchiveFileName().get())
+//    classpath = files('libs/' + DataServerServer.archiveFileName.get())
 }
 
 task DataServerClientStartScript(type: CreateStartScripts)
@@ -78,7 +112,8 @@ task DataServerClientStartScript(type: CreateStartScripts)
     outputDir = file('build/scripts/')
     mainClass = 'com.github.coryrobertson.ThreadedDataServer.Client.ThreadedDataServerClient'
     applicationName = 'StartThreadedDataServerClient'
-    classpath = files('libs/' + DataServerClient.archiveFileName.get())
+    classpath = files('libs/' + jar.getArchiveFileName().get())
+//    classpath = files('libs/' + DataServerClient.archiveFileName.get())
 }
 
 task copyPythonFile
@@ -89,12 +124,29 @@ task copyPythonFile
                 into './'
                 from 'src/main/python/servosCommand.py'
                 into './'
+                from 'src/main/python/servoPageReader.py'
+                into './'
+                from 'src/main/python/streamPiCamera.py'
+                into './'
+
+
             }
 }
 
 jar.dependsOn copyPythonFile
 jar.dependsOn DataServerClient
 jar.dependsOn DataServerServer
+
+jar {
+//    manifest {
+//        attributes(
+//                'Main-Class': 'com.package.YourClass'
+//        )
+//    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
 
 distributions
         {
@@ -103,12 +155,16 @@ distributions
                         contents
                                 {
                                     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-                                    from (DataServerServer) {into 'lib'}
-                                    from (DataServerClient) {into 'lib'}
+                                    //from (DataServerServer) {into 'lib'}
+                                    //from (DataServerClient) {into 'lib'}
+                                    //from (DataReverseServerHost) {into 'lib'}
                                     from (DataServerClientStartScript) {into 'bin'}
                                     from (DataServerServerStartScript) {into 'bin'}
+                                    from (DataReverseServerHostStartScript) {into 'bin'}
                                     from ("src/main/python/main.py") {into 'bin'}
                                     from ("src/main/python/servosCommand.py") {into 'bin'}
+                                    from ("src/main/python/servoPageReader.py") {into 'bin'}
+                                    from ("src/main/python/streamPiCamera.py") {into 'bin'}
                                 }
                     }
         }

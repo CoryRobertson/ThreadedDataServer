@@ -116,3 +116,5 @@ gradle-app.setting
 Ideas.txt
 /main.py
 /servosCommand.py
+/servoPageReader.py
+/streamPiCamera.py
