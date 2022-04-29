@@ -42,7 +42,7 @@ public class ThreadedDataServerClient extends Thread
         {
             System.out.println("Enter host to connect to: ");
             host = in.nextLine();
-            socket = new Socket(host, 5000);
+            socket = new Socket(host, 8123);
             clientMessageListThread.start();
 
             while(!input.equals("exit"))
@@ -66,7 +66,7 @@ public class ThreadedDataServerClient extends Thread
                     objectOutputStream.writeObject(output);
                     try
                     {
-                        Thread.sleep(1500);
+                        Thread.sleep(50);
                     }
                     catch (InterruptedException e)
                     {

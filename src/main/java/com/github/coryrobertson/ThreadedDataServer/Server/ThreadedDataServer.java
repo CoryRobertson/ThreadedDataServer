@@ -26,16 +26,17 @@ public class ThreadedDataServer implements Runnable
 //
 //        Thread webServer = new Thread(new ThreadedWebServer());
 //        webServer.start();
-        System.out.println("Waiting on port 5000...");
+        System.out.println("Waiting on port 8123...");
 
         while(true)
         {
-            try (ServerSocket serverSocket = new ServerSocket(5000))
+            try (ServerSocket serverSocket = new ServerSocket(8123))
             {
 
                 Socket clientSocket = serverSocket.accept();
                 if(clientCount >= maxClients && maxClients > 0)
-                {//this case occurs when too many clients are connecting
+                {
+                    //this case occurs when too many clients are connecting
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
                     ArrayList<Message> msgs = new ArrayList<>();
                     msgs.add(new Message(0,"server full"));
