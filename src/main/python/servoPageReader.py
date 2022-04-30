@@ -1,6 +1,7 @@
 import sys
 import urllib.request
 import urllib.parse
+import urllib.error
 from time import sleep
 
 
@@ -33,6 +34,10 @@ def main():
     # input_from_server = args[1]
     arguments = []
     angles = []
+
+    if servo_kit_running:
+        startUpAnimation()
+
     while 1:
         sleep(0.0125)
         angles.clear()
@@ -42,14 +47,15 @@ def main():
             pageText = str(page.read())
             conv = str(pageText[2:pageText.rfind('\'')])
             arguments = conv.split(",")
-        except:
+            angles.append(arguments[0])  # arg 0 is angle 0 of servo 0
+            angles.append(arguments[1])  # and so on
+            change_servo_angles(angles)
+        except urllib.error.URLError:
             # if we are here the web page was most likely unable to load for a brief amount of time, we can just try again
             print("web page dropped")
         # print(arguments)
-        angles.append(arguments[0])  # arg 0 is angle 0 of servo 0
-        angles.append(arguments[1])  # and so on
-        change_servo_angles(angles)
-        if servo_kit_running == True:
+
+        if servo_kit_running:
             if arguments[2] == "true":
                 print("laser is on!")
                 led_channel.duty_cycle = 65534
@@ -88,6 +94,32 @@ def clamp_servo_selection(servo_number):
     if int(servo_number) <= 0:
         return 0
     return servo_number
+
+def startUpAnimation():
+    # pretty bad but fun manual animation for startup :)
+    delay = 0.5
+    sleep(delay)
+    kit.servo[0].angle = 90
+    kit.servo[1].angle = 90
+    sleep(delay)
+    kit.servo[0].angle = 180
+    kit.servo[1].angle = 0
+    sleep(delay*2)
+    kit.servo[0].angle = 180
+    kit.servo[1].angle = 180
+    sleep(delay*2)
+    kit.servo[0].angle = 90
+    kit.servo[1].angle = 90
+    sleep(delay)
+    kit.servo[0].angle = 0
+    kit.servo[1].angle = 180
+    sleep(delay*2)
+    kit.servo[0].angle = 0
+    kit.servo[1].angle = 0
+    sleep(delay*2)
+    kit.servo[0].angle = 90
+    kit.servo[1].angle = 90
+    sleep(delay*4)
 
 
 if __name__ == '__main__':
