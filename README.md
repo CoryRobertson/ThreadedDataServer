@@ -10,12 +10,6 @@ Images of the assembled turret are [here](https://imgur.com/a/UkkJbJY)
 This project hosts a java socket server on one computer, and any number of clients can connect and send inputs to the server. At the moment most of the parsed commands are related to the primary use of this project which is to have a rasperry pi servo turret.
 There is also a web server host built in that allows you to have a much faster response time to the mouse.
 
-### Collaboration
-At the moment I am the only person who has added code to this project, but I would be absolutely ecstatic to have someone to nerd out and work on this with. :)
-
-#### Future Goals
-Later down the line I would love to have some sort of ASM solution to have the project just search for classes in the classpath that implement some interface to allow any command to work mostly. This is a later stage goal though.
-
 #### Things needed
 -Raspberry Pi (probably something better or equal to a 3?)
 
